@@ -1,64 +1,64 @@
 import 'package:flutter/material.dart';
-import './NewRoute.dart';
+import './model/post.dart';
 
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Flutter Counter',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Learn',
+      theme: ThemeData(
+        primarySwatch: Colors.yellow,
       ),
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Home(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key,this.title}): super(key: key);
-  final String title;
-
+class Home extends StatelessWidget {
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[100],  // 浅灰色背景
+      appBar: AppBar(
+        title: Text('Flutter Learn'),
+        elevation: 0.0,   // 关部导航栏下的阴影
+      ),
+      body: ListViewDemo(),
+    );
+  }
 }
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+
+class ListViewDemo extends StatelessWidget {
+  Widget _itemBuilder(BuildContext context, int index) {
+    return Container(
+      color: Colors.white,
+      margin:EdgeInsets.all(8.0),
+      child: Column(
+        children: <Widget>[
+          Image.network(posts[index].imageUrl),
+          SizedBox(height: 16.0,),
+          Text(
+            posts[index].title,
+            style: Theme.of(context).textTheme.title
+          ),
+          Text(
+            posts[index].author,
+            style: Theme.of(context).textTheme.subhead
+          ),
+          SizedBox(height: 16.0),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.title),
-      ),
-      body: new Center(
-        child: new Column(
-          children: <Widget>[
-            new Text('You have pushed the button this many times:'),
-            new Text('$_counter', style: Theme.of(context).textTheme.display1,),
-            FlatButton(
-              child: Text('打开新路由'),
-              textColor: Colors.blue,
-              onPressed: () {
-                // 导航到新路由
-                Navigator.push(context, new MaterialPageRoute(builder:(context){
-                  return new NewRoute();
-                }));
-              },
-            )
-          ],),
-      ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add)
-      ),
+    return ListView.builder(
+      itemCount: posts.length,
+      itemBuilder: _itemBuilder,
     );
   }
 }
