@@ -29,11 +29,6 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           title: Text('Flutter Learn'),
           elevation: 0.0, // 头部导航栏下的阴影,值为0.0意味着不要阴影,默认值是4.0
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            tooltip: '菜单',
-            onPressed: () => debugPrint('按下了顶部工具栏的菜单按钮'),
-          ),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),
@@ -62,6 +57,34 @@ class Home extends StatelessWidget {
             Icon(Icons.directions_bike, size: 128.0, color: Colors.black12),
           ],
         ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Text('header'.toUpperCase()),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100]
+                ),
+              ),
+              ListTile(
+                title: Text('Message', textAlign: TextAlign.right),
+                trailing: Icon(Icons.message, size: 22.0, color: Colors.black12),
+                onTap: ()=>Navigator.pop(context),
+              ),
+              ListTile(
+                title: Text('Favorite', textAlign: TextAlign.right),
+                trailing: Icon(Icons.favorite, size: 22.0, color: Colors.black12),
+                onTap: ()=>Navigator.pop(context),
+              ),
+              ListTile(
+                title: Text('Settings', textAlign: TextAlign.right),
+                trailing: Icon(Icons.settings, size: 22.0, color: Colors.black12),
+                onTap: ()=>Navigator.pop(context),
+              ),
+            ],
+          ),
+        )
       ),
     );
   }
