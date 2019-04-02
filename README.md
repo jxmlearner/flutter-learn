@@ -162,3 +162,163 @@ class Home extends StatelessWidget {
   }
 }
 ```
+## 四、Drawer抽屉
+```dart
+import 'package:flutter/material.dart';
+import './demo/listview_demo.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false, // 隐藏顶部的debug调试文字
+      title: 'Flutter Learn',
+      theme: ThemeData(
+        primarySwatch: Colors.yellow,
+        highlightColor: Color.fromRGBO(255, 255, 255, 0.5),
+        splashColor: Colors.white70
+      ),
+      home: Home(),
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: Colors.grey[100], // 浅灰色背景
+        appBar: AppBar(
+          title: Text('Flutter Learn'),
+          elevation: 0.0, // 头部导航栏下的阴影,值为0.0意味着不要阴影,默认值是4.0
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              tooltip: '搜索',
+              onPressed: () {
+                debugPrint('按下了顶部工具栏的搜索按钮');
+              },
+            ),
+          ],
+          bottom: TabBar(
+            unselectedLabelColor: Colors.black38,
+            indicatorColor: Colors.black54,
+            indicatorSize: TabBarIndicatorSize.label,
+            indicatorWeight: 1.0,
+            tabs: <Widget>[
+              Tab( icon: Icon(Icons.local_florist)),
+              Tab( icon: Icon(Icons.change_history)),
+              Tab( icon: Icon(Icons.directions_bike)),
+            ],
+          )
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            ListViewDemo(),
+            Icon(Icons.change_history, size: 128.0, color: Colors.black12),
+            Icon(Icons.directions_bike, size: 128.0, color: Colors.black12),
+          ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Text('header'.toUpperCase()),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100]
+                ),
+              ),
+              ListTile(
+                title: Text('Message', textAlign: TextAlign.right),
+                trailing: Icon(Icons.message, size: 22.0, color: Colors.black12),
+                onTap: ()=>Navigator.pop(context),
+              ),
+              ListTile(
+                title: Text('Favorite', textAlign: TextAlign.right),
+                trailing: Icon(Icons.favorite, size: 22.0, color: Colors.black12),
+                onTap: ()=>Navigator.pop(context),
+              ),
+              ListTile(
+                title: Text('Settings', textAlign: TextAlign.right),
+                trailing: Icon(Icons.settings, size: 22.0, color: Colors.black12),
+                onTap: ()=>Navigator.pop(context),
+              ),
+            ],
+          ),
+        )
+      ),
+    );
+  }
+}
+```
++ 还可以将上面的DrawerHeader 换成 UserAccountDrawerHeader
+```dart
+UserAccountsDrawerHeader(
+  accountName: Text('jancy', style:TextStyle(fontWeight: FontWeight.bold)),
+  accountEmail: Text('410958040@qq.com'),
+  currentAccountPicture: CircleAvatar(
+    backgroundImage: NetworkImage('https://img1.mukewang.com/53f82a4900019a2101000100-140-140.jpg'),
+  ),
+  decoration: BoxDecoration(
+    color: Colors.yellow[400],
+    image: DecorationImage(
+      image: NetworkImage('https://coding.imooc.com/static/module/class/content/img/315/section0-bg.png'),
+      fit:BoxFit.cover,
+      colorFilter: ColorFilter.mode(Colors.yellow.withOpacity(0.6), BlendMode.hardLight),
+    ),
+  ),
+),
+```
+
+## 五、BottomNavigationBar 底部导航
+```dart
+import 'package:flutter/material.dart';
+
+class BottomNavigationBarDemo extends StatefulWidget {
+  @override
+  _BottomNavigationBarDemoState createState() =>
+      _BottomNavigationBarDemoState();
+}
+
+class _BottomNavigationBarDemoState extends State<BottomNavigationBarDemo> {
+  int _currentIndex = 0;
+  void _onTapHandler(int index) {
+    setState(() {
+     _currentIndex = index; 
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      currentIndex: _currentIndex,
+      type: BottomNavigationBarType.fixed, // 当导航项大于等于4项时,类型会发生改变,需要手动设置类型
+      fixedColor: Colors.black, // 激活状态的颜色
+      onTap: _onTapHandler,
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.explore),
+          title: Text('Explore'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.history),
+          title: Text('History'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.list),
+          title: Text('List'),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          title: Text('My'),
+        ),
+      ],
+    );
+  }
+}
+```
