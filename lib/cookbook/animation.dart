@@ -2,6 +2,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 
+// void main() => runApp(AnimatedContainerApp());
+
 class AnimatedContainerApp extends StatefulWidget {
   @override
   _AnimatedContainerAppState createState() => _AnimatedContainerAppState();
